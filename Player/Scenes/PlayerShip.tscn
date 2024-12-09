@@ -1,0 +1,51 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Player/Animations/ShipThrust.tres" type="Animation" id=1]
+[ext_resource path="res://Player/Scripts/ShipImpl.cs" type="Script" id=2]
+
+[sub_resource type="Animation" id=1]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Visuals/ThrustVisual:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[node name="PlayerShip" type="KinematicBody2D"]
+script = ExtResource( 2 )
+
+[node name="Visuals" type="Node2D" parent="."]
+position = Vector2( 0, -25 )
+
+[node name="ShipVisual" type="Line2D" parent="Visuals"]
+points = PoolVector2Array( 0, 0, -25, 64, 0, 25, 25, 64, 0, 0 )
+width = 2.5
+default_color = Color( 1, 1, 1, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="ThrustVisual" type="Line2D" parent="Visuals"]
+visible = false
+points = PoolVector2Array( -10, 40, 0, 64, 10, 40 )
+width = 2.5
+default_color = Color( 1, 1, 1, 1 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+visible = false
+polygon = PoolVector2Array( 0, -27.5, -27.5, 40, 27.5, 40 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+playback_speed = 5.0
+anims/RESET = SubResource( 1 )
+anims/ShipThrust = ExtResource( 1 )
