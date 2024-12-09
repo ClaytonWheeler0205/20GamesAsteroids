@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Player/Animations/ShipThrust.tres" type="Animation" id=1]
 [ext_resource path="res://Player/Scripts/ShipImpl.cs" type="Script" id=2]
 [ext_resource path="res://Player/Animations/ShipThrustIdle.tres" type="Animation" id=3]
+[ext_resource path="res://Game/Scripts/ScreenWrapperImpl.cs" type="Script" id=4]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -51,3 +52,8 @@ playback_speed = 5.0
 anims/RESET = SubResource( 1 )
 anims/ShipThrust = ExtResource( 1 )
 anims/ShipThrustIdle = ExtResource( 3 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+position = Vector2( 0, 7 )
+scale = Vector2( 2.6, 3.3 )
+script = ExtResource( 4 )

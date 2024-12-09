@@ -22,21 +22,32 @@ namespace Game.Player
         private const string THRUST_ANIMATION_NAME = "ShipThrust";
         private const string THRUST_IDLE_ANIMATION_NAME = "ShipThrustIdle";
 
+        private ScreenWrapper _screenWrapper;
+        private const string SCREEN_WRAPPER_NODE_PATH = "VisibilityNotifier2D";
+
+
         public override void _Ready()
         {
             SetNodeReferences();
+            CheckNodeReferences();
+            _screenWrapper.NodeToTrack = this;
         }
 
         private void SetNodeReferences()
         {
             _thrust = GetNode<AnimationPlayer>(THRUST_NODE_PATH);
+            _screenWrapper = GetNode<ScreenWrapper>(SCREEN_WRAPPER_NODE_PATH);
         }
 
         public void CheckNodeReferences()
         {
-            if (_thrust.IsValid())
+            if (!_thrust.IsValid())
             {
                 GD.PrintErr("ERROR: Thrust animation player is not valid!");
+            }
+            if (!_screenWrapper.IsValid())
+            {
+                GD.PrintErr("ERROR: Screen wrapper is not valid");
             }
         }
 
