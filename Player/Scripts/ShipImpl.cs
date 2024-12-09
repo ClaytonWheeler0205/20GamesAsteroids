@@ -20,6 +20,7 @@ namespace Game.Player
         private AnimationPlayer _thrust;
         private const string THRUST_NODE_PATH = "AnimationPlayer";
         private const string THRUST_ANIMATION_NAME = "ShipThrust";
+        private const string THRUST_IDLE_ANIMATION_NAME = "ShipThrustIdle";
 
         public override void _Ready()
         {
@@ -41,13 +42,13 @@ namespace Game.Player
 
         public override void _Process(float delta)
         {
-            if (isMoving && !_thrust.IsPlaying())
+            if (isMoving)
             {
                 _thrust.Play(THRUST_ANIMATION_NAME);
             }
-            else if (!isMoving && _thrust.IsPlaying())
+            else
             {
-                _thrust.Stop();
+                _thrust.Play(THRUST_IDLE_ANIMATION_NAME);
             }
         }
 
