@@ -37,6 +37,9 @@ namespace Game.Player
         private Timer _cooldown;
         private const string COOLDOWN_NODE_PATH = "CooldownTimer";
 
+        private AudioStreamPlayer _thrustSound;
+        private const string THRUST_SOUND_NODE_PATH = "AudioStreamPlayer";
+
 
         public override void _Ready()
         {
@@ -51,6 +54,7 @@ namespace Game.Player
             _screenWrapper = GetNode<ScreenWrapper>(SCREEN_WRAPPER_NODE_PATH);
             _muzzle = GetNode<Node2D>(MUZZLE_NODE_PATH);
             _cooldown = GetNode<Timer>(COOLDOWN_NODE_PATH);
+            _thrustSound = GetNode<AudioStreamPlayer>(THRUST_SOUND_NODE_PATH);
         }
 
         public void CheckNodeReferences()
@@ -71,6 +75,10 @@ namespace Game.Player
             {
                 GD.PrintErr("Error Cooldown timer is not valid!");
             }
+            if (!_thrustSound.IsValid())
+            {
+                GD.PrintErr("ERROR: Thrust sound is not valid!");
+            }
         }
 
         public override void _Process(float delta)
@@ -78,10 +86,19 @@ namespace Game.Player
             if (isMoving)
             {
                 _thrust.Play(THRUST_ANIMATION_NAME);
+                if(!_thrustSound.Playing)
+                {
+                    _thrustSound.PitchScale = (float)GD.RandRange(0.95, 1.05);
+                    _thrustSound.Play();
+                }
             }
             else
             {
                 _thrust.Play(THRUST_IDLE_ANIMATION_NAME);
+                if (_thrustSound.Playing)
+                {
+                    _thrustSound.Stop();
+                }
             }
         }
 

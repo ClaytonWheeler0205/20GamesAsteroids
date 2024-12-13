@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Player/Animations/ShipThrust.tres" type="Animation" id=1]
 [ext_resource path="res://Player/Scripts/ShipImpl.cs" type="Script" id=2]
 [ext_resource path="res://Player/Animations/ShipThrustIdle.tres" type="Animation" id=3]
 [ext_resource path="res://Game/Scripts/ScreenWrapperImpl.cs" type="Script" id=4]
+[ext_resource path="res://Player/Audio/player_thrust.wav" type="AudioStream" id=5]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -65,5 +66,8 @@ position = Vector2( 0, -25 )
 [node name="CooldownTimer" type="Timer" parent="."]
 wait_time = 0.3
 one_shot = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
 
 [connection signal="timeout" from="CooldownTimer" to="." method="OnCooldownTimerTimeout"]
