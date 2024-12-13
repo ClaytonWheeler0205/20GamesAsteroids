@@ -20,5 +20,7 @@ namespace Game.Player
         {
             set { isMoving = value; }
         }
+
+        public abstract void Fire();
     }
 }

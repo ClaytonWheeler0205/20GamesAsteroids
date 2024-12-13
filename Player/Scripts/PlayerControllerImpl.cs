@@ -40,6 +40,10 @@ namespace Game.Player
 
         public override void _UnhandledInput(InputEvent @event)
         {
+            if (@event.IsActionPressed("fire"))
+            {
+                _shipToControl.Fire();
+            }
             if (@event.IsActionPressed("thrust"))
             {
                 _shipToControl.IsMoving = true;

@@ -25,6 +25,18 @@ namespace Game.Player
         private ScreenWrapper _screenWrapper;
         private const string SCREEN_WRAPPER_NODE_PATH = "VisibilityNotifier2D";
 
+        private Node2D _muzzle;
+        private const string MUZZLE_NODE_PATH = "Muzzle";
+
+        private PackedScene _bullet = GD.Load<PackedScene>("res://Bullet/Scenes/PlayerBullet.tscn");
+
+        private AudioStream _bulletSound = GD.Load<AudioStream>("res://Bullet/Audio/player_bullet_fire.wav");
+        private PackedScene _bulletSoundEffect = GD.Load<PackedScene>("res://FX/Scenes/OneShotAudio.tscn");
+
+        private bool _canFire = true;
+        private Timer _cooldown;
+        private const string COOLDOWN_NODE_PATH = "CooldownTimer";
+
 
         public override void _Ready()
         {
@@ -37,6 +49,8 @@ namespace Game.Player
         {
             _thrust = GetNode<AnimationPlayer>(THRUST_NODE_PATH);
             _screenWrapper = GetNode<ScreenWrapper>(SCREEN_WRAPPER_NODE_PATH);
+            _muzzle = GetNode<Node2D>(MUZZLE_NODE_PATH);
+            _cooldown = GetNode<Timer>(COOLDOWN_NODE_PATH);
         }
 
         public void CheckNodeReferences()
@@ -48,6 +62,14 @@ namespace Game.Player
             if (!_screenWrapper.IsValid())
             {
                 GD.PrintErr("ERROR: Screen wrapper is not valid");
+            }
+            if (!_muzzle.IsValid())
+            {
+                GD.PrintErr("ERROR: Muzzle is not valid!");
+            }
+            if (!_cooldown.IsValid())
+            {
+                GD.PrintErr("Error Cooldown timer is not valid!");
             }
         }
 
@@ -78,6 +100,27 @@ namespace Game.Player
             }
 
             MoveAndSlide(_shipVelocity);
+        }
+
+        public override void Fire()
+        {
+            if (_canFire)
+            {
+                Node2D bullet = _bullet.Instance<Node2D>();
+                bullet.GlobalPosition = _muzzle.GlobalPosition;
+                bullet.Rotation = Rotation;
+                AudioStreamPlayer bulletSoundEffect = _bulletSoundEffect.Instance<AudioStreamPlayer>();
+                bulletSoundEffect.Stream = _bulletSound;
+                GetTree().Root.AddChild(bulletSoundEffect);
+                GetTree().Root.AddChild(bullet);
+                _canFire = false;
+                _cooldown.Start();
+            }
+        }
+
+        public void OnCooldownTimerTimeout()
+        {
+            _canFire = true;
         }
     }
 }

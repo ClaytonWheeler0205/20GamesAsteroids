@@ -49,6 +49,11 @@ fire={
  ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="Player"
+2d_physics/layer_2="PlayerBullet"
+
 [mono]
 
 project/assembly_name="20GamesAsteroids"
