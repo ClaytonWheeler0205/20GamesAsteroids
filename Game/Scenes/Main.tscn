@@ -1,8 +1,21 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Player/Scenes/PlayerController.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Asteroid/Scenes/LargeAsteroid.tscn" type="PackedScene" id=3]
 
 [node name="Main" type="Node"]
 
 [node name="PlayerController" parent="." instance=ExtResource( 1 )]
 position = Vector2( 508, 298 )
+
+[node name="LargeAsteroid" parent="." instance=ExtResource( 3 )]
+position = Vector2( 176, 469 )
+
+[node name="LargeAsteroid2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 130, 97 )
+
+[node name="LargeAsteroid3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 920, 97 )
+
+[node name="LargeAsteroid4" parent="." instance=ExtResource( 3 )]
+position = Vector2( 884, 478 )

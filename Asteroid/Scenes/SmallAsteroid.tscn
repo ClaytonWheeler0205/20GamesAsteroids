@@ -1,0 +1,11 @@
+[gd_scene format=2]
+
+[node name="SmallAsteroid" type="Area2D"]
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PoolVector2Array( 1, -14, -11, -17, -20, -15, -29, -9, -30, -1, -28, 6, -22, 14, -10, 19, -2, 17, 0, 11, 5, 13, 14, 15, 22, 13, 28, 9, 25, 2, 22, -7, 17, -10, 13, -7, 9, -11, 1, -14 )
+width = 2.5
+default_color = Color( 1, 1, 1, 1 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( 1, -14, -11, -17, -20, -15, -29, -9, -30, -1, -28, 6, -22, 14, -10, 19, -2, 17, 0, 11, 5, 13, 14, 15, 22, 13, 28, 9, 25, 2, 22, -7, 17, -10, 13, -7, 9, -11, 1, -14 )
