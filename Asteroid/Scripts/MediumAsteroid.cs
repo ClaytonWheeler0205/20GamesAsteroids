@@ -5,17 +5,19 @@ using Util.ExtensionMethods;
 namespace Game.Asteroid
 {
 
-    public class LargeAsteroid : Asteroid
+    public class MediumAsteroid : Asteroid
     {
 
-        private const string  PLAYER_BULLET_NODE_GROUP = "PlayerBullet";
+        private const double MAX_ANGLE_CHANGE = Math.PI / 4;
 
-        private PackedScene _mediumAsteroid = GD.Load<PackedScene>("res://Asteroid/Scenes/MediumAsteroid.tscn");
+        private const string PLAYER_BULLET_NODE_GROUP = "PlayerBullet";
+
+        private PackedScene _smallAsteroid = GD.Load<PackedScene>("res://Asteroid/Scenes/SmallAsteroid.tscn");
 
         public override void _Ready()
         {
             base._Ready();
-            DriftRotation = (float)GD.RandRange(0, 2.0*Math.PI);
+            DriftRotation += (float)GD.RandRange(-MAX_ANGLE_CHANGE, MAX_ANGLE_CHANGE);
         }
 
         public void OnArea2DEntered(Area2D area)
@@ -24,7 +26,7 @@ namespace Game.Asteroid
             {
                 for (int i = 0; i < 2; i++)
                 {
-                    Asteroid asteroid = _mediumAsteroid.Instance<Asteroid>();
+                    Asteroid asteroid = _smallAsteroid.Instance<Asteroid>();
                     asteroid.DriftRotation = DriftRotation;
                     asteroid.GlobalPosition = GlobalPosition;
                     GetTree().Root.CallDeferred("add_child", asteroid);
