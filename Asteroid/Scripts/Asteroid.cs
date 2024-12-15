@@ -1,3 +1,4 @@
+using Game.Bus;
 using Godot;
 using System;
 using Util.ExtensionMethods;
@@ -7,6 +8,9 @@ namespace Game.Asteroid
 
     public abstract class Asteroid : Area2D
     {
+        [Export]
+        private int _pointValue;
+
         [Export]
         private float _driftSpeed = 200.0f;
         private Vector2 _driftDirection = Vector2.Up;
@@ -72,6 +76,7 @@ namespace Game.Asteroid
             sound.Stream = _asteroidExplosionSoundEffect;
             GetTree().Root.AddChild(explosion);
             GetTree().Root.AddChild(sound);
+            ScoreEventBus.Instance.EmitSignal("AwardPoints", _pointValue);
         }
     }
 }

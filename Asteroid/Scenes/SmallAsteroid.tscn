@@ -7,6 +7,8 @@
 collision_layer = 4
 collision_mask = 3
 script = ExtResource( 2 )
+_pointValue = 100
+_driftSpeed = 250.0
 
 [node name="Line2D" type="Line2D" parent="."]
 points = PoolVector2Array( 1, -14, -11, -17, -20, -15, -29, -9, -30, -1, -28, 6, -22, 14, -10, 19, -2, 17, 0, 11, 5, 13, 14, 15, 22, 13, 28, 9, 25, 2, 22, -7, 17, -10, 13, -7, 9, -11, 1, -14 )
