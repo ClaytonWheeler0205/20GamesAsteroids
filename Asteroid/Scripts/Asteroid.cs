@@ -68,6 +68,7 @@ namespace Game.Asteroid
             GlobalPosition += _driftDirection.Rotated(_driftRotation) * _driftSpeed * delta;
         }
 
+
         protected void Explode()
         {
             CPUParticles2D explosion = _asteroidExplosion.Instance<CPUParticles2D>();
@@ -76,7 +77,11 @@ namespace Game.Asteroid
             sound.Stream = _asteroidExplosionSoundEffect;
             GetTree().Root.AddChild(explosion);
             GetTree().Root.AddChild(sound);
+
             ScoreEventBus.Instance.EmitSignal("AwardPoints", _pointValue);
+            AsteroidEventBus.Instance.EmitSignal("AsteroidDestroyed");
+
+            this.SafeQueueFree();
         }
     }
 }

@@ -10,6 +10,7 @@ namespace Game.Asteroid
         private const double MAX_ANGLE_CHANGE = Math.PI / 4;
 
         private const string PLAYER_BULLET_NODE_GROUP = "PlayerBullet";
+        private const string PLAYER_NODE_GROUP = "Player";
 
         public override void _Ready()
         {
@@ -22,8 +23,15 @@ namespace Game.Asteroid
             if (area.IsInGroup(PLAYER_BULLET_NODE_GROUP))
             {
                 Explode();
-                this.SafeQueueFree();
                 area.SafeQueueFree();
+            }
+        }
+
+        public void OnBodyEntered(Node body)
+        {
+            if (body.IsInGroup(PLAYER_NODE_GROUP))
+            {
+                Explode();
             }
         }
     }
