@@ -13,6 +13,8 @@ namespace Game
         private const string SHIP_NODE_PATH = "PlayerController/PlayerShip";
         private AsteroidsManager _asteroidsManager;
         private const string ASTEROIDS_MANAGER_NODE_PATH = "AsteroidsManager";
+        private PlayerSpawnArea _spawnArea;
+        private const string PLAYER_SPAWN_AREA_NODE_PATH = "PlayerSpawnArea";
 
         private int _level = 1;
 
@@ -29,6 +31,7 @@ namespace Game
         {
             _ship = GetNode<Ship>(SHIP_NODE_PATH);
             _asteroidsManager = GetNode<AsteroidsManager>(ASTEROIDS_MANAGER_NODE_PATH);
+            _spawnArea = GetNode<PlayerSpawnArea>(PLAYER_SPAWN_AREA_NODE_PATH);
         }
 
         private void CheckNodeReferences()
@@ -40,6 +43,10 @@ namespace Game
             if (!_asteroidsManager.IsValid())
             {
                 GD.PrintErr("ERROR: Asteroids manager is not valid!");
+            }
+            if (!_spawnArea.IsValid())
+            {
+                GD.PrintErr("ERROR: Spawn area is not valid!");
             }
         }
 
@@ -58,6 +65,10 @@ namespace Game
         public async void OnPlayerRespawn()
         {
             await ToSignal(GetTree().CreateTimer(2.0f), "timeout");
+            while (!_spawnArea.AreaIsEmpty())
+            {
+                await ToSignal(GetTree().CreateTimer(0.1f), "timeout");
+            }
             _ship.Respawn();
         }
     }

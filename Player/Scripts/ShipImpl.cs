@@ -180,6 +180,7 @@ namespace Game.Player
             Rotation = 0.0f;
             Visible = true;
             _shipCollision.SetDeferred("disabled", false);
+            PlayerEventBus.Instance.EmitSignal("PlayerRegainControl");
         }
 
         public void OnCooldownTimerTimeout()

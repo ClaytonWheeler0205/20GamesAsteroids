@@ -35,7 +35,7 @@ namespace Game.Player
         private void SetNodeConnections()
         {
             PlayerEventBus.Instance.Connect("PlayerDestroyed", this, nameof(OnPlayerDestroyed));
-            PlayerEventBus.Instance.Connect("PlayerRespawn", this, nameof(OnPlayerRespawn));
+            PlayerEventBus.Instance.Connect("PlayerRegainControl", this, nameof(OnPlayerRegainControl));
         }
 
         public override void _Process(float delta)
@@ -67,7 +67,7 @@ namespace Game.Player
             IsControllerActive = false;
         }
 
-        public void OnPlayerRespawn()
+        public void OnPlayerRegainControl()
         {
             IsControllerActive = true;
         }
