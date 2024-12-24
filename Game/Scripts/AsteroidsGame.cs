@@ -1,3 +1,4 @@
+using Game.Bus;
 using Game.Player;
 using Godot;
 using System;
@@ -19,6 +20,7 @@ namespace Game
         {
             SetNodeReferences();
             CheckNodeReferences();
+            SetNodeConnections();
             _asteroidsManager.Ship = _ship;
             _asteroidsManager.SpawnAsteroids(_level);
         }
@@ -41,11 +43,22 @@ namespace Game
             }
         }
 
+        private void SetNodeConnections()
+        {
+            PlayerEventBus.Instance.Connect("PlayerRespawn", this, nameof(OnPlayerRespawn));
+        }
+
         public async void OnAsteroidsCleared()
         {
             _level++;
             await ToSignal(GetTree().CreateTimer(2.0f), "timeout");
             _asteroidsManager.SpawnAsteroids(_level);
+        }
+
+        public async void OnPlayerRespawn()
+        {
+            await ToSignal(GetTree().CreateTimer(2.0f), "timeout");
+            _ship.Respawn();
         }
     }
 }

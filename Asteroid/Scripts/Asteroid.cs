@@ -69,14 +69,18 @@ namespace Game.Asteroid
         }
 
 
-        protected void Explode()
+        protected void Explode(bool playSound)
         {
             CPUParticles2D explosion = _asteroidExplosion.Instance<CPUParticles2D>();
-            AudioStreamPlayer sound = _asteroidExplosionSound.Instance<AudioStreamPlayer>();
             explosion.GlobalPosition = GlobalPosition;
-            sound.Stream = _asteroidExplosionSoundEffect;
             GetTree().Root.AddChild(explosion);
-            GetTree().Root.AddChild(sound);
+
+            if (playSound)
+            {
+                AudioStreamPlayer sound = _asteroidExplosionSound.Instance<AudioStreamPlayer>();
+                sound.Stream = _asteroidExplosionSoundEffect;
+                GetTree().Root.AddChild(sound);
+            }
 
             ScoreEventBus.Instance.EmitSignal("AwardPoints", _pointValue);
             AsteroidEventBus.Instance.EmitSignal("AsteroidDestroyed");

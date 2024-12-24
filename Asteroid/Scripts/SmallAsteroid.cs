@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using Util.ExtensionMethods;
+using Game.Player;
 
 namespace Game.Asteroid
 {
@@ -22,7 +23,7 @@ namespace Game.Asteroid
         {
             if (area.IsInGroup(PLAYER_BULLET_NODE_GROUP))
             {
-                Explode();
+                Explode(true);
                 area.SafeQueueFree();
             }
         }
@@ -31,7 +32,11 @@ namespace Game.Asteroid
         {
             if (body.IsInGroup(PLAYER_NODE_GROUP))
             {
-                Explode();
+                Explode(false);
+                if (body is Ship ship)
+                {
+                    ship.Die();
+                }
             }
         }
     }

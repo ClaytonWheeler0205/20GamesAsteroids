@@ -22,5 +22,8 @@ namespace Game.Player
         }
 
         public abstract void Fire();
+
+        public abstract void Die();
+        public abstract void Respawn();
     }
 }

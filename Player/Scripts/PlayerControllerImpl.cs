@@ -1,3 +1,4 @@
+using Game.Bus;
 using Godot;
 using System;
 using Util.ExtensionMethods;
@@ -15,6 +16,7 @@ namespace Game.Player
         {
             SetNodeReferences();
             CheckNodeReferences();
+            SetNodeConnections();
         }
 
         private void SetNodeReferences()
@@ -30,6 +32,12 @@ namespace Game.Player
             }
         }
 
+        private void SetNodeConnections()
+        {
+            PlayerEventBus.Instance.Connect("PlayerDestroyed", this, nameof(OnPlayerDestroyed));
+            PlayerEventBus.Instance.Connect("PlayerRespawn", this, nameof(OnPlayerRespawn));
+        }
+
         public override void _Process(float delta)
         {
             if (IsControllerActive)
@@ -40,11 +48,11 @@ namespace Game.Player
 
         public override void _UnhandledInput(InputEvent @event)
         {
-            if (@event.IsActionPressed("fire"))
+            if (@event.IsActionPressed("fire") && IsControllerActive)
             {
                 _shipToControl.Fire();
             }
-            if (@event.IsActionPressed("thrust"))
+            if (@event.IsActionPressed("thrust") && IsControllerActive)
             {
                 _shipToControl.IsMoving = true;
             }
@@ -52,6 +60,16 @@ namespace Game.Player
             {
                 _shipToControl.IsMoving = false;
             }
+        }
+
+        public void OnPlayerDestroyed()
+        {
+            IsControllerActive = false;
+        }
+
+        public void OnPlayerRespawn()
+        {
+            IsControllerActive = true;
         }
     }
 }

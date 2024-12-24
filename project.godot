@@ -18,6 +18,8 @@ config/icon="res://icon.png"
 
 ScoreEventBus="*res://Buses/Scenes/ScoreEventBus.tscn"
 AsteroidEventBus="*res://Buses/Scenes/AsteroidEventBus.tscn"
+PlayerEventBus="*res://Buses/Scenes/PlayerEventBus.tscn"
+LivesEventBus="*res://Buses/Scenes/LivesEventBus.tscn"
 
 [display]
 
