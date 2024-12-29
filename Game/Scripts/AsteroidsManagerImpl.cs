@@ -10,7 +10,7 @@ namespace Game
     {
         private const int BASE_NUMBER_OF_ASTEROIDS = 3;
 
-        private const float MINIMUM_SHIP_RANGE = 150.0f;
+        private const float MINIMUM_SHIP_RANGE = 175.0f;
 
         private const double MINIMUM_ASTEROID_X = 75.0;
         private const double MAXIMUM_ASTEROID_X = 950.0;

@@ -47,6 +47,7 @@ namespace Game.Asteroid
             Rotation = (float)GD.RandRange(0.0, 2.0 * Math.PI);
             SetNodeReferences();
             CheckNodeReferences();
+            AdjustAsteroidPosition();
             _screenWrapper.NodeToTrack = this;
         }
 
@@ -60,6 +61,27 @@ namespace Game.Asteroid
             if (!_screenWrapper.IsValid())
             {
                 GD.PrintErr("ERROR: Screen wrapper is not valid!");
+            }
+        }
+
+        private void AdjustAsteroidPosition()
+        {
+            Vector2 screenSize = GetViewportRect().Size;
+            if (GlobalPosition.x < 0)
+            {
+                GlobalPosition = new Vector2(screenSize.x, GlobalPosition.y);
+            }
+            else if (GlobalPosition.x > screenSize.x)
+            {
+                GlobalPosition = new Vector2(0, GlobalPosition.y);
+            }
+            if (GlobalPosition.y < 0)
+            {
+                GlobalPosition = new Vector2(GlobalPosition.x, screenSize.y);
+            }
+            else if (GlobalPosition.y > screenSize.y)
+            {
+                GlobalPosition = new Vector2(GlobalPosition.x, 0);
             }
         }
 

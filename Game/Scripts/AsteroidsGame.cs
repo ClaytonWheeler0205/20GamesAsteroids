@@ -2,6 +2,7 @@ using Game.Bus;
 using Game.Player;
 using Godot;
 using System;
+using System.Runtime.CompilerServices;
 using Util.ExtensionMethods;
 
 namespace Game
@@ -15,6 +16,10 @@ namespace Game
         private const string ASTEROIDS_MANAGER_NODE_PATH = "AsteroidsManager";
         private PlayerSpawnArea _spawnArea;
         private const string PLAYER_SPAWN_AREA_NODE_PATH = "PlayerSpawnArea";
+        private Control _waitingUI;
+        private const string WAITING_UI_NODE_PATH = "GUI/WaitingUI";
+        private Control _gameOverUI;
+        private const string GAME_OVER_UI_NODE_PATH = "GUI/GameOverUI";
 
         private int _level = 1;
 
@@ -32,6 +37,8 @@ namespace Game
             _ship = GetNode<Ship>(SHIP_NODE_PATH);
             _asteroidsManager = GetNode<AsteroidsManager>(ASTEROIDS_MANAGER_NODE_PATH);
             _spawnArea = GetNode<PlayerSpawnArea>(PLAYER_SPAWN_AREA_NODE_PATH);
+            _waitingUI = GetNode<Control>(WAITING_UI_NODE_PATH);
+            _gameOverUI = GetNode<Control>(GAME_OVER_UI_NODE_PATH);
         }
 
         private void CheckNodeReferences()
@@ -47,6 +54,14 @@ namespace Game
             if (!_spawnArea.IsValid())
             {
                 GD.PrintErr("ERROR: Spawn area is not valid!");
+            }
+            if (!_waitingUI.IsValid())
+            {
+                GD.PrintErr("ERROR: Waiting UI is not valid!");
+            }
+            if (!_gameOverUI.IsValid())
+            {
+                GD.PrintErr("ERROR: Game over UI is not valid!");
             }
         }
 
@@ -67,9 +82,32 @@ namespace Game
             await ToSignal(GetTree().CreateTimer(2.0f), "timeout");
             while (!_spawnArea.AreaIsEmpty())
             {
+                _waitingUI.Visible = true;
                 await ToSignal(GetTree().CreateTimer(0.1f), "timeout");
             }
+            _waitingUI.Visible = false;
             _ship.Respawn();
+        }
+
+        public async void OnGameOver()
+        {
+            _gameOverUI.Visible = true;
+            await ToSignal(GetTree().CreateTimer(2.0f), "timeout");
+            ClearAsteroids();
+            GetTree().ChangeScene("res://Game/Scenes/MainMenu.tscn");
+        }
+
+        private void ClearAsteroids()
+        {
+            Node root = GetTree().Root;
+            for (int i = 0; i < root.GetChildCount(); i++)
+            {
+                Node childNode = root.GetChild(i);
+                if (childNode.IsInGroup("Asteroid"))
+                {
+                    childNode.SafeQueueFree();
+                }
+            }
         }
     }
 }

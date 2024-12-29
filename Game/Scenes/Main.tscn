@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Player/Scenes/PlayerController.tscn" type="PackedScene" id=1]
 [ext_resource path="res://GUI/Scenes/ScoreUI.tscn" type="PackedScene" id=2]
@@ -6,9 +6,11 @@
 [ext_resource path="res://Game/Scripts/AsteroidsManagerImpl.cs" type="Script" id=4]
 [ext_resource path="res://Game/Scripts/AsteroidsGame.cs" type="Script" id=5]
 [ext_resource path="res://Game/Scripts/PlayerSpawnArea.cs" type="Script" id=6]
+[ext_resource path="res://GUI/Scenes/WaitingUI.tscn" type="PackedScene" id=7]
+[ext_resource path="res://GUI/Scenes/GameOverUI.tscn" type="PackedScene" id=8]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 150.0
+radius = 175.0
 
 [node name="Main" type="Node"]
 script = ExtResource( 5 )
@@ -25,6 +27,12 @@ __meta__ = {
 
 [node name="LivesUI" parent="GUI" instance=ExtResource( 3 )]
 
+[node name="WaitingUI" parent="GUI" instance=ExtResource( 7 )]
+visible = false
+
+[node name="GameOverUI" parent="GUI" instance=ExtResource( 8 )]
+visible = false
+
 [node name="AsteroidsManager" type="Node" parent="."]
 script = ExtResource( 4 )
 
@@ -37,6 +45,7 @@ script = ExtResource( 6 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerSpawnArea"]
 shape = SubResource( 1 )
 
+[connection signal="GameOver" from="GUI/LivesUI" to="." method="OnGameOver"]
 [connection signal="AsteroidsCleared" from="AsteroidsManager" to="." method="OnAsteroidsCleared"]
 [connection signal="area_entered" from="PlayerSpawnArea" to="PlayerSpawnArea" method="OnAreaEntered"]
 [connection signal="area_exited" from="PlayerSpawnArea" to="PlayerSpawnArea" method="OnAreaExited"]

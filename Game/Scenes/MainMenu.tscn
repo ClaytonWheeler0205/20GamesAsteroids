@@ -1,0 +1,294 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://GUI/Fonts/TitleText.tres" type="DynamicFont" id=1]
+[ext_resource path="res://GUI/Art/AsteroidsButtonOn.png" type="Texture" id=2]
+[ext_resource path="res://GUI/Art/AsteroidsButtonOff.png" type="Texture" id=3]
+[ext_resource path="res://GUI/Scripts/MainMenu.cs" type="Script" id=4]
+[ext_resource path="res://GUI/Scripts/MenuButton.cs" type="Script" id=5]
+[ext_resource path="res://GUI/Fonts/TitleTextSmall.tres" type="DynamicFont" id=6]
+[ext_resource path="res://GUI/Fonts/TitleTextSmaller.tres" type="DynamicFont" id=7]
+[ext_resource path="res://Asteroid/Scenes/SmallAsteroid.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Asteroid/Scenes/MediumAsteroid.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Asteroid/Scenes/LargeAsteroid.tscn" type="PackedScene" id=10]
+
+[node name="MainMenu" type="Node"]
+script = ExtResource( 4 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_priority = 1
+
+[node name="TitleMenu" type="Control" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/TitleMenu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -300.0
+margin_top = -300.0
+margin_right = 300.0
+margin_bottom = 300.0
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/TitleMenu/ColorRect"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -275.0
+margin_top = -275.0
+margin_right = 275.0
+margin_bottom = 275.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="Label" type="Label" parent="CanvasLayer/TitleMenu/ColorRect/ColorRect"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -186.0
+margin_right = 186.0
+margin_bottom = 82.0
+custom_fonts/font = ExtResource( 1 )
+text = "Asteroids"
+uppercase = true
+
+[node name="PlayButton" type="TextureButton" parent="CanvasLayer/TitleMenu/ColorRect/ColorRect"]
+unique_name_in_owner = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -145.0
+margin_top = -125.0
+margin_right = 145.0
+margin_bottom = -35.0
+focus_neighbour_top = NodePath("../InstructionsButton")
+shortcut_in_tooltip = false
+action_mode = 0
+button_mask = 0
+texture_normal = ExtResource( 3 )
+texture_focused = ExtResource( 2 )
+expand = true
+script = ExtResource( 5 )
+
+[node name="Label" type="Label" parent="CanvasLayer/TitleMenu/ColorRect/ColorRect/PlayButton"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -84.0
+margin_top = -41.0
+margin_right = 84.0
+margin_bottom = 41.0
+custom_fonts/font = ExtResource( 1 )
+text = "Play"
+uppercase = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer/TitleMenu/ColorRect/ColorRect/PlayButton"]
+
+[node name="InstructionsButton" type="TextureButton" parent="CanvasLayer/TitleMenu/ColorRect/ColorRect"]
+unique_name_in_owner = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -271.0
+margin_top = 50.0
+margin_right = 273.0
+margin_bottom = 140.0
+focus_neighbour_bottom = NodePath("../PlayButton")
+shortcut_in_tooltip = false
+action_mode = 0
+button_mask = 0
+texture_normal = ExtResource( 3 )
+texture_focused = ExtResource( 2 )
+expand = true
+script = ExtResource( 5 )
+
+[node name="Label" type="Label" parent="CanvasLayer/TitleMenu/ColorRect/ColorRect/InstructionsButton"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -234.0
+margin_top = -41.0
+margin_right = 234.0
+margin_bottom = 41.0
+custom_fonts/font = ExtResource( 1 )
+text = "How to play"
+uppercase = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer/TitleMenu/ColorRect/ColorRect/InstructionsButton"]
+
+[node name="InstructionsMenu" type="Control" parent="CanvasLayer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/InstructionsMenu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -300.0
+margin_top = -300.0
+margin_right = 300.0
+margin_bottom = 300.0
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/InstructionsMenu/ColorRect"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -275.0
+margin_top = -275.0
+margin_right = 275.0
+margin_bottom = 275.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="Label" type="Label" parent="CanvasLayer/InstructionsMenu/ColorRect/ColorRect"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -234.0
+margin_right = 234.0
+margin_bottom = 82.0
+custom_fonts/font = ExtResource( 1 )
+text = "How To Play"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="Label2" type="Label" parent="CanvasLayer/InstructionsMenu/ColorRect/ColorRect"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -258.0
+margin_top = -175.0
+margin_right = 258.0
+margin_bottom = -93.0
+custom_fonts/font = ExtResource( 1 )
+text = "up/W - Thrust"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="Label3" type="Label" parent="CanvasLayer/InstructionsMenu/ColorRect/ColorRect"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -258.0
+margin_top = -90.0
+margin_right = 258.0
+margin_bottom = -8.0
+custom_fonts/font = ExtResource( 6 )
+text = "Left/A - Rotate Left"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="Label4" type="Label" parent="CanvasLayer/InstructionsMenu/ColorRect/ColorRect"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -281.0
+margin_top = -14.0
+margin_right = 279.0
+margin_bottom = 68.0
+custom_fonts/font = ExtResource( 7 )
+text = "Right/D - Rotate Right"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="Label5" type="Label" parent="CanvasLayer/InstructionsMenu/ColorRect/ColorRect"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -280.0
+margin_top = -202.0
+margin_right = 280.0
+margin_bottom = -120.0
+custom_fonts/font = ExtResource( 1 )
+text = "Space - Shoot"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="MenuButton" type="TextureButton" parent="CanvasLayer/InstructionsMenu/ColorRect/ColorRect"]
+unique_name_in_owner = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -271.0
+margin_top = 173.0
+margin_right = 273.0
+margin_bottom = 263.0
+shortcut_in_tooltip = false
+action_mode = 0
+button_mask = 0
+texture_normal = ExtResource( 3 )
+texture_focused = ExtResource( 2 )
+expand = true
+script = ExtResource( 5 )
+
+[node name="Label" type="Label" parent="CanvasLayer/InstructionsMenu/ColorRect/ColorRect/MenuButton"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -297.0
+margin_top = -41.0
+margin_right = 297.0
+margin_bottom = 41.0
+custom_fonts/font = ExtResource( 6 )
+text = "Return to Menu"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer/InstructionsMenu/ColorRect/ColorRect/MenuButton"]
+
+[node name="LargeAsteroid" parent="." instance=ExtResource( 10 )]
+position = Vector2( 114, 108 )
+
+[node name="LargeAsteroid2" parent="." instance=ExtResource( 10 )]
+position = Vector2( 107, 504 )
+
+[node name="LargeAsteroid3" parent="." instance=ExtResource( 10 )]
+position = Vector2( 912, 514 )
+
+[node name="LargeAsteroid4" parent="." instance=ExtResource( 10 )]
+position = Vector2( 912, 88 )
+
+[node name="MediumAsteroid" parent="." instance=ExtResource( 9 )]
+position = Vector2( 114, 308 )
+
+[node name="MediumAsteroid2" parent="." instance=ExtResource( 9 )]
+position = Vector2( 506, 81 )
+
+[node name="MediumAsteroid3" parent="." instance=ExtResource( 9 )]
+position = Vector2( 509, 504 )
+
+[node name="MediumAsteroid4" parent="." instance=ExtResource( 9 )]
+position = Vector2( 919, 312 )
+
+[node name="SmallAsteroid" parent="." instance=ExtResource( 8 )]
+position = Vector2( 307, 192 )
+
+[node name="SmallAsteroid2" parent="." instance=ExtResource( 8 )]
+position = Vector2( 310, 428 )
+
+[node name="SmallAsteroid3" parent="." instance=ExtResource( 8 )]
+position = Vector2( 704, 450 )
+
+[node name="SmallAsteroid4" parent="." instance=ExtResource( 8 )]
+position = Vector2( 699, 176 )
+
+[connection signal="pressed" from="CanvasLayer/TitleMenu/ColorRect/ColorRect/PlayButton" to="." method="OnPlayButtonPressed"]
+[connection signal="pressed" from="CanvasLayer/TitleMenu/ColorRect/ColorRect/InstructionsButton" to="." method="OnInstructionsButtonPressed"]
+[connection signal="pressed" from="CanvasLayer/InstructionsMenu/ColorRect/ColorRect/MenuButton" to="." method="OnMenuButtonPressed"]
