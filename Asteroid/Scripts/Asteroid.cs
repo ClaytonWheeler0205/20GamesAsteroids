@@ -42,6 +42,12 @@ namespace Game.Asteroid
         private PackedScene _asteroidExplosionSound = GD.Load<PackedScene>("res://FX/Scenes/OneShotAudio.tscn");
         private AudioStream _asteroidExplosionSoundEffect = GD.Load<AudioStream>("res://Asteroid/Audio/asteroid_explosion.wav");
 
+        private bool _isAsteroidDestroyed = false;
+        protected bool IsAsteroidDestroyed
+        {
+            get { return _isAsteroidDestroyed; }
+        }
+
         public override void _Ready()
         {
             Rotation = (float)GD.RandRange(0.0, 2.0 * Math.PI);
@@ -93,21 +99,25 @@ namespace Game.Asteroid
 
         protected void Explode(bool playSound)
         {
-            CPUParticles2D explosion = _asteroidExplosion.Instance<CPUParticles2D>();
-            explosion.GlobalPosition = GlobalPosition;
-            GetTree().Root.AddChild(explosion);
-
-            if (playSound)
+            if (!_isAsteroidDestroyed)
             {
-                AudioStreamPlayer sound = _asteroidExplosionSound.Instance<AudioStreamPlayer>();
-                sound.Stream = _asteroidExplosionSoundEffect;
-                GetTree().Root.AddChild(sound);
+                _isAsteroidDestroyed = true;
+                CPUParticles2D explosion = _asteroidExplosion.Instance<CPUParticles2D>();
+                explosion.GlobalPosition = GlobalPosition;
+                GetTree().Root.AddChild(explosion);
+
+                if (playSound)
+                {
+                    AudioStreamPlayer sound = _asteroidExplosionSound.Instance<AudioStreamPlayer>();
+                    sound.Stream = _asteroidExplosionSoundEffect;
+                    GetTree().Root.AddChild(sound);
+                }
+
+                ScoreEventBus.Instance.EmitSignal("AwardPoints", _pointValue);
+                AsteroidEventBus.Instance.EmitSignal("AsteroidDestroyed");
+
+                this.SafeQueueFree();
             }
-
-            ScoreEventBus.Instance.EmitSignal("AwardPoints", _pointValue);
-            AsteroidEventBus.Instance.EmitSignal("AsteroidDestroyed");
-
-            this.SafeQueueFree();
         }
     }
 }

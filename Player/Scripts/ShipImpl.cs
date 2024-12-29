@@ -108,7 +108,7 @@ namespace Game.Player
             if (isMoving)
             {
                 _thrust.Play(THRUST_ANIMATION_NAME);
-                if(!_thrustSound.Playing)
+                if (!_thrustSound.Playing)
                 {
                     _thrustSound.PitchScale = (float)GD.RandRange(0.95, 1.05);
                     _thrustSound.Play();
@@ -172,11 +172,12 @@ namespace Game.Player
 
             PlayerEventBus.Instance.EmitSignal("PlayerDestroyed");
             LivesEventBus.Instance.EmitSignal("LoseLife");
+
+            GlobalPosition = _startingPosition;
         }
 
         public override void Respawn()
         {
-            GlobalPosition = _startingPosition;
             Rotation = 0.0f;
             Visible = true;
             _shipCollision.SetDeferred("disabled", false);

@@ -27,7 +27,7 @@ collision_mask = 4
 script = ExtResource( 2 )
 _shipAcceleration = 15.0
 _maxSpeed = 250.0
-_roationSpeed = 180.0
+_roationSpeed = 200.0
 
 [node name="Visuals" type="Node2D" parent="."]
 position = Vector2( 0, -25 )
