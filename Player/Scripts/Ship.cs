@@ -25,5 +25,6 @@ namespace Game.Player
 
         public abstract void Die();
         public abstract void Respawn();
+        public abstract void Teleport();
     }
 }

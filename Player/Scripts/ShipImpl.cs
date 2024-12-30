@@ -51,6 +51,9 @@ namespace Game.Player
 
         private Vector2 _startingPosition;
 
+        private Teleport _teleporter;
+        private const string TELEPORTER_NODE_PATH = "Teleporter";
+
 
         public override void _Ready()
         {
@@ -58,6 +61,7 @@ namespace Game.Player
             CheckNodeReferences();
             _screenWrapper.NodeToTrack = this;
             _startingPosition = GlobalPosition;
+            _teleporter.NodeToTeleport = this;
         }
 
         private void SetNodeReferences()
@@ -69,6 +73,7 @@ namespace Game.Player
             _thrustSound = GetNode<AudioStreamPlayer>(THRUST_SOUND_NODE_PATH);
             _shipCollision = GetNode<CollisionPolygon2D>(SHIP_COLLISION_NODE_PATH);
             _explosionSound = GetNode<AudioStreamPlayer>(EXPLOSION_SOUND_NODE_PATH);
+            _teleporter = GetNode<Teleport>(TELEPORTER_NODE_PATH);
         }
 
         public void CheckNodeReferences()
@@ -100,6 +105,10 @@ namespace Game.Player
             if (!_explosionSound.IsValid())
             {
                 GD.PrintErr("ERROR: Explosion sound is not valid!");
+            }
+            if (!_teleporter.IsValid())
+            {
+                GD.PrintErr("ERROR: Teleporter is not valid!");
             }
         }
 
@@ -182,6 +191,11 @@ namespace Game.Player
             Visible = true;
             _shipCollision.SetDeferred("disabled", false);
             PlayerEventBus.Instance.EmitSignal("PlayerRegainControl");
+        }
+
+        public override void Teleport()
+        {
+            _teleporter.TeleportNode();
         }
 
         public void OnCooldownTimerTimeout()

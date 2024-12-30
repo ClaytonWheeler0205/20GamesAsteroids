@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://GUI/Fonts/ScoreText.tres" type="DynamicFont" id=1]
+[ext_resource path="res://GUI/Scripts/TeleportUI.cs" type="Script" id=2]
+
+[node name="TeleportUI" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+
+[node name="TeleportLabel" type="Label" parent="."]
+margin_left = 16.0
+margin_top = 112.0
+margin_right = 226.0
+margin_bottom = 153.0
+custom_fonts/font = ExtResource( 1 )
+text = "Teleport: On"
+uppercase = true

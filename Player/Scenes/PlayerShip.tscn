@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Player/Animations/ShipThrust.tres" type="Animation" id=1]
 [ext_resource path="res://Player/Scripts/ShipImpl.cs" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Game/Scripts/ScreenWrapperImpl.cs" type="Script" id=4]
 [ext_resource path="res://Player/Audio/player_thrust.wav" type="AudioStream" id=5]
 [ext_resource path="res://Player/Audio/player_explosion_asteroids.wav" type="AudioStream" id=6]
+[ext_resource path="res://Player/Scripts/TeleportImpl.cs" type="Script" id=7]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -77,4 +78,13 @@ stream = ExtResource( 5 )
 [node name="ExplosionAudioPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
 
+[node name="Teleporter" type="Node" parent="."]
+script = ExtResource( 7 )
+
+[node name="Timer" type="Timer" parent="Teleporter"]
+one_shot = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Teleporter"]
+
 [connection signal="timeout" from="CooldownTimer" to="." method="OnCooldownTimerTimeout"]
+[connection signal="timeout" from="Teleporter/Timer" to="Teleporter" method="OnCooldownTimerTimeout"]

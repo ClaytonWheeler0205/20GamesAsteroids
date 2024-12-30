@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Player/Scenes/PlayerController.tscn" type="PackedScene" id=1]
 [ext_resource path="res://GUI/Scenes/ScoreUI.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Game/Scripts/PlayerSpawnArea.cs" type="Script" id=6]
 [ext_resource path="res://GUI/Scenes/WaitingUI.tscn" type="PackedScene" id=7]
 [ext_resource path="res://GUI/Scenes/GameOverUI.tscn" type="PackedScene" id=8]
+[ext_resource path="res://GUI/Scenes/TeleportUI.tscn" type="PackedScene" id=9]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 175.0
@@ -19,6 +20,7 @@ script = ExtResource( 5 )
 position = Vector2( 500, 300 )
 
 [node name="GUI" type="CanvasLayer" parent="."]
+process_priority = 1
 
 [node name="ScoreUI" parent="GUI" instance=ExtResource( 2 )]
 __meta__ = {
@@ -32,6 +34,8 @@ visible = false
 
 [node name="GameOverUI" parent="GUI" instance=ExtResource( 8 )]
 visible = false
+
+[node name="TeleportUI" parent="GUI" instance=ExtResource( 9 )]
 
 [node name="AsteroidsManager" type="Node" parent="."]
 script = ExtResource( 4 )

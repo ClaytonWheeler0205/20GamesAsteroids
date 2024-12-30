@@ -60,6 +60,10 @@ namespace Game.Player
             {
                 _shipToControl.IsMoving = false;
             }
+            if (@event.IsActionPressed("teleport") && IsControllerActive)
+            {
+                _shipToControl.Teleport();
+            }
         }
 
         public void OnPlayerDestroyed()

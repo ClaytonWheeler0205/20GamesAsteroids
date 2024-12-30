@@ -20,6 +20,7 @@ ScoreEventBus="*res://Buses/Scenes/ScoreEventBus.tscn"
 AsteroidEventBus="*res://Buses/Scenes/AsteroidEventBus.tscn"
 PlayerEventBus="*res://Buses/Scenes/PlayerEventBus.tscn"
 LivesEventBus="*res://Buses/Scenes/LivesEventBus.tscn"
+TeleportEventBus="*res://Buses/Scenes/TeleportEventBus.tscn"
 
 [display]
 
@@ -53,6 +54,11 @@ thrust={
 fire={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":32,"unicode":0,"echo":false,"script":null)
+ ]
+}
+teleport={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":84,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
 
