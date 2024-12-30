@@ -48,7 +48,6 @@ width = 2.5
 default_color = Color( 1, 1, 1, 1 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-visible = false
 polygon = PoolVector2Array( 0, -27.5, -27.5, 40, 27.5, 40 )
 __meta__ = {
 "_edit_lock_": true
