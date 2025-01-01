@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Player/Scenes/PlayerController.tscn" type="PackedScene" id=1]
 [ext_resource path="res://GUI/Scenes/ScoreUI.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://GUI/Scenes/GameOverUI.tscn" type="PackedScene" id=8]
 [ext_resource path="res://GUI/Scenes/TeleportUI.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Game/Scripts/UFOManager.cs" type="Script" id=10]
+[ext_resource path="res://Game/Audio/368730__leszek_szary__background-loop.wav" type="AudioStream" id=11]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 175.0
@@ -55,6 +56,10 @@ script = ExtResource( 10 )
 
 [node name="SpawnTimer" type="Timer" parent="UFOManager"]
 one_shot = true
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+autoplay = true
 
 [connection signal="GameOver" from="GUI/LivesUI" to="." method="OnGameOver"]
 [connection signal="AsteroidsCleared" from="AsteroidsManager" to="." method="OnAsteroidsCleared"]

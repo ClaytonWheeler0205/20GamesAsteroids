@@ -37,6 +37,9 @@ namespace Game.UFO
         private AudioStream _explosionSound = GD.Load<AudioStream>("res://UFO/Audio/ufo_explosion.wav");
         private PackedScene _ufoExplosion = GD.Load<PackedScene>("res://FX/Scenes/UFOExplosion.tscn");
 
+        private AudioStreamPlayer _movementSound;
+        private const string MOVEMENT_SOUND_NODE_PATH = "MovementSoundPlayer";
+
         public override void _Ready()
         {
             SetNodeReferences();
@@ -55,12 +58,14 @@ namespace Game.UFO
 
             float randomTime = (float)GD.RandRange(1.0, 2.0);
             _movementTimer.Start(randomTime);
+            _movementSound.PitchScale = (float)GD.RandRange(0.95, 1.05);
         }
 
         private void SetNodeReferences()
         {
             _screenWrapper = GetNode<ScreenWrapper>(SCREEN_WRAPPER_NODE_PATH);
             _movementTimer = GetNode<Timer>(MOVEMENT_TIMER_NODE_PATH);
+            _movementSound = GetNode<AudioStreamPlayer>(MOVEMENT_SOUND_NODE_PATH);
         }
 
         private void CheckNodeReferences()
@@ -72,6 +77,10 @@ namespace Game.UFO
             if (!_movementTimer.IsValid())
             {
                 GD.PrintErr("ERROR: UFO movement time is not valid!");
+            }
+            if (!_movementSound.IsValid())
+            {
+                GD.PrintErr("ERROR: UFO movement sound player is not valid!");
             }
         }
 
@@ -101,6 +110,7 @@ namespace Game.UFO
             bullet.GlobalPosition = GlobalPosition;
             AudioStreamPlayer bulletSoundPlayer = _oneShotAudio.Instance<AudioStreamPlayer>();
             bulletSoundPlayer.Stream = _bulletSound;
+            bulletSoundPlayer.PitchScale = (float)GD.RandRange(0.95, 1.05);
             GetTree().Root.AddChild(bullet);
             GetTree().Root.AddChild(bulletSoundPlayer);
         }
@@ -145,6 +155,7 @@ namespace Game.UFO
 
             AudioStreamPlayer explosionSound = _oneShotAudio.Instance<AudioStreamPlayer>();
             explosionSound.Stream = _explosionSound;
+            explosionSound.PitchScale = (float)GD.RandRange(0.95, 1.05);
             GetTree().Root.AddChild(explosionSound);
 
             this.SafeQueueFree();
