@@ -1,3 +1,5 @@
+using Game.Bus;
+using Game.Player;
 using Godot;
 using System;
 using Util;
@@ -23,6 +25,17 @@ namespace Game.UFO
         private float _yDirection = 0.0f;
 
         private bool _canBeDestroyed = false;
+
+        private PackedScene _bullet = GD.Load<PackedScene>("res://Bullet/Scenes/UFOBullet.tscn");
+        private AudioStream _bulletSound = GD.Load<AudioStream>("res://Bullet/Audio/ufo_bullet_fire.wav");
+        private PackedScene _oneShotAudio = GD.Load<PackedScene>("res://FX/Scenes/OneShotAudio.tscn");
+
+        private const string ASTEROID_NODE_GROUP = "Asteroid";
+        private const string PLAYER_BULLET_NODE_GROUP = "PlayerBullet";
+        private const string PLAYER_NODE_GROUP = "Player";
+
+        private AudioStream _explosionSound = GD.Load<AudioStream>("res://UFO/Audio/ufo_explosion.wav");
+        private PackedScene _ufoExplosion = GD.Load<PackedScene>("res://FX/Scenes/UFOExplosion.tscn");
 
         public override void _Ready()
         {
@@ -82,12 +95,59 @@ namespace Game.UFO
             _canBeDestroyed = true;
         }
 
+        public void OnFireRateTimerTimeout()
+        {
+            Node2D bullet = _bullet.Instance<Node2D>();
+            bullet.GlobalPosition = GlobalPosition;
+            AudioStreamPlayer bulletSoundPlayer = _oneShotAudio.Instance<AudioStreamPlayer>();
+            bulletSoundPlayer.Stream = _bulletSound;
+            GetTree().Root.AddChild(bullet);
+            GetTree().Root.AddChild(bulletSoundPlayer);
+        }
+
         public void OnScreenExited()
         {
             if (_canBeDestroyed)
             {
                 this.SafeQueueFree();
             }
+        }
+
+        public void OnAreaEntered(Area2D area)
+        {
+            if (area.IsInGroup(ASTEROID_NODE_GROUP))
+            {
+                Explode();
+            }
+            if (area.IsInGroup(PLAYER_BULLET_NODE_GROUP))
+            {
+                ScoreEventBus.Instance.EmitSignal("AwardPoints", _pointValue);
+                Explode();
+            }
+        }
+
+        public void OnBodyEntered(Node2D body)
+        {
+            if (body.IsInGroup(PLAYER_NODE_GROUP))
+            {
+                if (body is Ship ship)
+                {
+                    ship.Die();
+                }
+            }
+        }
+
+        private void Explode()
+        {
+            Node2D explosion = _ufoExplosion.Instance<Node2D>();
+            explosion.GlobalPosition = GlobalPosition;
+            GetTree().Root.AddChild(explosion);
+
+            AudioStreamPlayer explosionSound = _oneShotAudio.Instance<AudioStreamPlayer>();
+            explosionSound.Stream = _explosionSound;
+            GetTree().Root.AddChild(explosionSound);
+
+            this.SafeQueueFree();
         }
     }
 }

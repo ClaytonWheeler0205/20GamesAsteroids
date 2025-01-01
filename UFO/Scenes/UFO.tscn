@@ -5,12 +5,14 @@
 [ext_resource path="res://UFO/Audio/ufo_move.wav" type="AudioStream" id=3]
 
 [node name="UFO" type="Area2D" groups=["UFO"]]
-position = Vector2( 96, 319 )
 collision_layer = 16
 collision_mask = 15
 script = ExtResource( 2 )
 
 [node name="Visuals" type="Node2D" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Line2D" type="Line2D" parent="Visuals"]
 points = PoolVector2Array( -33, 0, -10, -12, 10, -12, 33, 0, 10, 12, -10, 12, -33, 0 )
@@ -48,6 +50,13 @@ wait_time = 10.0
 one_shot = true
 autostart = true
 
+[node name="FireRateTimer" type="Timer" parent="."]
+wait_time = 0.75
+autostart = true
+
+[connection signal="area_entered" from="." to="." method="OnAreaEntered"]
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="OnScreenExited"]
 [connection signal="timeout" from="MovementTimer" to="." method="OnMovementTimerTimeout"]
 [connection signal="timeout" from="LifetimeTimer" to="." method="OnLifetimeTimerTimeout"]
+[connection signal="timeout" from="FireRateTimer" to="." method="OnFireRateTimerTimeout"]
